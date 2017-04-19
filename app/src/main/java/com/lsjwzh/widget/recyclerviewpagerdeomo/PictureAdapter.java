@@ -22,7 +22,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -86,7 +85,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.SimpleVi
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "", Toast.LENGTH_SHORT).show();
             }
         });
         final String filePath = mItems.get(position);

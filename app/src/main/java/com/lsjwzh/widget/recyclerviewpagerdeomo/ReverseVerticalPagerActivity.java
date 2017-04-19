@@ -2,11 +2,14 @@ package com.lsjwzh.widget.recyclerviewpagerdeomo;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 
 public class ReverseVerticalPagerActivity extends VerticalPagerActivity {
+    private static final String TAG = ReverseVerticalPagerActivity.class.getSimpleName();
+
     @Override
     protected void initViewPager() {
         mRecyclerView = (RecyclerViewPager) findViewById(R.id.viewpager);
