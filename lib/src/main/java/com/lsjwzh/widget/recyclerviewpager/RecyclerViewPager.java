@@ -26,18 +26,19 @@ import java.util.List;
  */
 public class RecyclerViewPager extends RecyclerView {
     public static final boolean DEBUG = BuildConfig.DEBUG;
+    private static final String TAG = RecyclerViewPager.class.getSimpleName();
 
     private RecyclerViewPagerAdapter<?> mViewPagerAdapter;
-    private float mTriggerOffset = 0.25f;
-    private float mFlingFactor = 0.15f;
-    private float mTouchSpan;
+    private float mTriggerOffset = 0.25f;//滑动速率
+    private float mFlingFactor = 0.15f;//出发条件
+    private float mTouchSpan;//触摸范围
     private List<OnPageChangedListener> mOnPageChangedListeners;
-    private int mSmoothScrollTargetPosition = -1;
-    private int mPositionBeforeScroll = -1;
+    private int mSmoothScrollTargetPosition = -1;//目标位置
+    private int mPositionBeforeScroll = -1;//滑动前的位置
 
-    private boolean mSinglePageFling;
+    private boolean mSinglePageFling;//是否是单张滑动
 
-    boolean mNeedAdjust;
+    boolean mNeedAdjust;//是否需要调整
     int mFisrtLeftWhenDragging;
     int mFirstTopWhenDragging;
     View mCurView;
@@ -438,6 +439,7 @@ public class RecyclerViewPager extends RecyclerView {
             }
             mTouchSpan = 0;
         } else if (state == SCROLL_STATE_SETTLING) {
+            Log.e(TAG, "onScrollStateChanged: ");
             mNeedAdjust = false;
             if (mCurView != null) {
                 if (getLayoutManager().canScrollHorizontally()) {
