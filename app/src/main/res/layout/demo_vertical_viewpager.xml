@@ -2,7 +2,10 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/space_4px"
+    android:paddingRight="@dimen/space_2px"
+    android:background="@android:color/white">
 
     <com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
         android:id="@+id/viewpager"
@@ -11,5 +14,9 @@
         android:layout_marginTop="20dp"
         android:clipToPadding="false"
         android:paddingTop="30dp"
-        android:paddingBottom="30dp" />
+        android:paddingBottom="30dp"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="outsideInset"
+        android:scrollbarSize="@dimen/space_4dp"
+        android:scrollbarThumbVertical="@drawable/scrollbar_vertical_thumb" />
 </FrameLayout>

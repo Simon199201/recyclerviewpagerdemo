@@ -36,7 +36,7 @@ public class VerticalPagerPictureActivity extends Activity {
         mRecyclerView.setTriggerOffset(0.15f);
         mRecyclerView.setFlingFactor(0.25f);
         mRecyclerView.setLayoutManager(layout);
-        mRecyclerView.setAdapter(new PictureAdapter(this, mRecyclerView, mList));
+        mRecyclerView.setAdapter(new PictureAdapter(this, mList));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLongClickable(true);
 

@@ -18,57 +18,46 @@ package com.lsjwzh.widget.recyclerviewpagerdeomo;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.lsjwzh.widget.recyclerviewpagerdeomo.R.id;
 
-public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.SimpleViewHolder> {
-    private static final int DEFAULT_ITEM_COUNT = 100;
-
+class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.SimpleViewHolder> {
+    private static final String TAG = "PictureAdapter";
     private final Context mContext;
-    private final RecyclerView mRecyclerView;
     private List<String> mItems;
-    private int mCurrentItemId = 0;
+    private int mSelectedIndex = -1;
 
-    public static class SimpleViewHolder extends RecyclerView.ViewHolder {
-        public final ImageView imageView;
+    static class SimpleViewHolder extends RecyclerView.ViewHolder {
+        final ImageView imageView;
 
-        public SimpleViewHolder(View view) {
+        SimpleViewHolder(View view) {
             super(view);
-            imageView = (ImageView) view.findViewById(id.title);
+            imageView = (ImageView) view.findViewById(R.id.title);
         }
     }
 
-    public PictureAdapter(Context context, RecyclerView recyclerView, List<String> list) {
-        this(context, recyclerView, DEFAULT_ITEM_COUNT, list);
-    }
 
-    public PictureAdapter(Context context, RecyclerView recyclerView, int itemCount, List<String> list) {
+    PictureAdapter(Context context, List<String> list) {
         mContext = context;
-        mItems = new ArrayList<>(itemCount);
-        for (int i = 0; i < itemCount; i++) {
+        mItems = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
             addItem(i, list.get(i));
         }
-        mRecyclerView = recyclerView;
     }
 
-    public void addItem(int position, String fileInfo) {
-        final int id = mCurrentItemId++;
+    private void addItem(int position, String fileInfo) {
         mItems.add(position, fileInfo);
         notifyItemInserted(position);
-    }
-
-    public void removeItem(int position) {
-        mItems.remove(position);
-        notifyItemRemoved(position);
     }
 
     @Override
@@ -78,17 +67,30 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.SimpleVi
     }
 
     @Override
-    public void onBindViewHolder(SimpleViewHolder holder, int position) {
-//        holder.imageView.setText(mItems.get(position).toString());
-        Glide.with(mContext).load(mItems.get(position)).centerCrop().into(holder.imageView);
-        final View itemView = holder.itemView;
+    public void onBindViewHolder(final SimpleViewHolder holder, int position) {
+        Log.e(TAG, "onBindViewHolder: position is " + position + "\tmSelectedIndex is " + mSelectedIndex);
+        String picturePath = mItems.get(position);
+        if (picturePath.toLowerCase().endsWith(".gif")) {
+            Glide.with(mContext).load(picturePath).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(holder.imageView);
+        } else {
+            Glide.with(mContext).load(picturePath).centerCrop().into(holder.imageView);
+        }
+        View itemView = holder.itemView;
+        if (position == mSelectedIndex) {
+            holder.imageView.setBackground(mContext.getResources().getDrawable(R.drawable.item_background_press));
+        } else {
+            holder.imageView.setBackground(mContext.getResources().getDrawable(R.drawable.item_background));
+
+        }
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mSelectedIndex = holder.getAdapterPosition();
 //                Toast.makeText(mContext, "", Toast.LENGTH_SHORT).show();
+//                holder.imageView.setBackground(R.drawable.item_background);
+                notifyDataSetChanged();
             }
         });
-        final String filePath = mItems.get(position);
     }
 
     @Override

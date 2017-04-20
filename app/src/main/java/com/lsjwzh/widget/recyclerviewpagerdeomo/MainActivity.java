@@ -53,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar mProgressBar;
     private ArrayList<String> currentFileList;
     private boolean enableEvent = true;
-    private String pictureDir = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "DCIM" + File.separator + "Camera";
+    //    private String pictureDir = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "DCIM" + File.separator + "Camera";
+    private String pictureDir = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "Download";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -261,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<FileInfo> fs = new ArrayList<>();
             for (File child : files) {
                 if (!child.isDirectory() && !child.isHidden()) {
-                    if (child.getAbsolutePath().toLowerCase().endsWith(".png") || child.getAbsolutePath().toLowerCase().endsWith(".jpg")) {
+                    if (child.getAbsolutePath().toLowerCase().endsWith(".png") || child.getAbsolutePath().toLowerCase().endsWith(".jpg") || child.getAbsolutePath().toLowerCase().endsWith(".gif")) {
                         FileInfo info = new FileInfo();
                         info.fileName = child.getName();
                         info.filePath = child.getAbsolutePath();
